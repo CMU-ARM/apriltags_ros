@@ -6,21 +6,18 @@
 
 
 namespace apriltags_ros{
+  class AprilTagDetectorNodelet : public nodelet::Nodelet
+  {
+  public:
+    AprilTagDetectorNodelet(){}
 
-class AprilTagDetectorNodelet : public nodelet::Nodelet
-{
+  private:
+    void onInit(){
+      detector_.reset(new AprilTagDetector(getNodeHandle(), getPrivateNodeHandle()));
+    }
+    boost::shared_ptr<AprilTagDetector> detector_;
 
-public:
-  AprilTagDetectorNodelet(){}
-
-private:
-  void onInit(){
-    detector_.reset(new AprilTagDetector(getNodeHandle(), getPrivateNodeHandle()));
-  }
-  boost::shared_ptr<AprilTagDetector> detector_;
-
-};
-
+  };
 }
 
-PLUGINLIB_DECLARE_CLASS(apriltags_ros, AprilTagDetectorNodelet, apriltags_ros::AprilTagDetectorNodelet, nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS(apriltags_ros::AprilTagDetectorNodelet, nodelet::Nodelet);
